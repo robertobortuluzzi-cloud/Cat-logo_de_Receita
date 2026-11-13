@@ -1,0 +1,165 @@
+/* ===== Tema Ayanami Rei ===== */
+:root {
+    --cabelo:   #8fb8d9;   /* azul-claro do cabelo */
+    --cabelo-2: #d6e6f2;
+    --plugsuit: #f7fafc;   /* branco do plugsuit */
+    --olhos:    #c8102e;   /* vermelho dos olhos */
+    --laranja:  #f28c28;   /* laranja EVA-00 */
+    --texto:    #2b3a4a;
+    --borda:    #cfe0ec;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 32px 20px 60px;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    color: var(--texto);
+    background: linear-gradient(160deg, var(--cabelo-2) 0%, var(--plugsuit) 60%);
+    min-height: 100vh;
+    border-top: 6px solid var(--olhos);
+}
+
+h1, h2 {
+    max-width: 900px;
+    margin: 0 auto 24px;
+    padding-left: 14px;
+    border-left: 6px solid var(--olhos);
+    color: #1f3a52;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+p, ul {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===== Links ===== */
+a {
+    color: #2f6f9f;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color .15s;
+}
+a:hover { color: var(--laranja); }
+
+/* Menu do index */
+ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+ul li a {
+    display: inline-block;
+    padding: 10px 20px;
+    background: var(--plugsuit);
+    border: 1px solid var(--borda);
+    border-left: 4px solid var(--olhos);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(47, 111, 159, .12);
+}
+ul li a:hover {
+    background: var(--olhos);
+    color: #fff;
+}
+
+/* ===== Formulário ===== */
+form {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 28px;
+    background: var(--plugsuit);
+    border: 1px solid var(--borda);
+    border-top: 5px solid var(--cabelo);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(47, 111, 159, .15);
+}
+form br { display: none; }
+
+label {
+    display: block;
+    margin: 16px 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #44627d;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    color: var(--texto);
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus {
+    border-color: var(--olhos);
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, .15);
+}
+
+button {
+    margin-top: 24px;
+    padding: 10px 26px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--olhos);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+}
+button:hover  { background: var(--laranja); }
+button:active { transform: translateY(1px); }
+
+form > a { margin-left: 14px; }
+
+/* ===== Tabela ===== */
+table {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border: none;
+    border-collapse: collapse;
+    background: var(--plugsuit);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(47, 111, 159, .15);
+}
+thead tr { background: var(--cabelo); }
+th {
+    padding: 12px 14px;
+    text-align: left;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    border: none;
+}
+td {
+    padding: 12px 14px;
+    border: none;
+    border-bottom: 1px solid var(--borda);
+}
+tbody tr:nth-child(even) { background: #eef5fa; }
+tbody tr:hover           { background: #fff1e0; }
+
+/* Ações da listagem */
+td a[href^="editar"]  { color: #2f6f9f; margin-right: 10px; }
+td a[href^="excluir"] { color: var(--olhos); }
+td a[href^="excluir"]:hover { color: var(--laranja); }
