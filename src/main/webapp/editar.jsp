@@ -1,10 +1,11 @@
+
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="br.com.senai.projeto.model.Receita" %>
 <%@ page import="br.com.senai.projeto.dao.ReceitaDAO" %>
 <%@ page import="br.com.senai.projeto.dao.ReceitaDAOimpl" %>
 
 <%!
-    // Escapa o texto para exibir com segurança no HTML
+    // Método responsável por escapar caracteres especiais e evitar problemas na exibição HTML.
     private static String esc(String s) {
         if (s == null) return "";
         return s.replace("&", "&amp;")
@@ -16,11 +17,14 @@
 %>
 
 <%
+    // Cria o objeto responsável por acessar e atualizar os dados das receitas.
     ReceitaDAO dao = new ReceitaDAOimpl();
 
+    // Verifica se o formulário foi enviado pelo método POST.
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         request.setCharacterEncoding("UTF-8");
 
+        // Cria um objeto Receita e preenche seus atributos com os dados recebidos do formulário.
         Receita receita = new Receita();
         receita.setId(Integer.parseInt(request.getParameter("id")));
         receita.setNome(request.getParameter("nome"));
@@ -29,19 +33,27 @@
         receita.setDificuldade(request.getParameter("dificuldade"));
         receita.setDescricao(request.getParameter("descricao"));
 
+        // Atualiza os dados da receita no banco de dados.
         dao.atualizar(receita);
 
+        // Retorna o usuário para a página de listagem após a atualização.
         response.sendRedirect("listagem.jsp");
         return;
     }
 
+    // Recupera o ID da receita enviado pela URL.
     String idParam = request.getParameter("id");
+
+    // Caso o ID não seja informado, retorna para a listagem.
     if (idParam == null || idParam.isEmpty()) {
         response.sendRedirect("listagem.jsp");
         return;
     }
 
+    // Busca no banco de dados a receita correspondente ao ID informado.
     Receita receita = dao.buscarPorId(Integer.parseInt(idParam));
+
+    // Se a receita não existir, retorna para a página de listagem.
     if (receita == null) {
         response.sendRedirect("listagem.jsp");
         return;
@@ -56,6 +68,7 @@
     <title>Editar Receita</title>
     <style>
         :root {
+            /* Variáveis que definem as cores principais do design. */
             --tomate: #c8452d;
             --tomate-escuro: #9e3220;
             --mostarda: #e0a526;
@@ -81,6 +94,7 @@
             background-size: 64px 64px;
         }
 
+        /* Estilização do título principal da página. */
         h1 {
             max-width: 720px;
             margin: 0 auto 28px;
@@ -91,6 +105,7 @@
             text-shadow: 3px 3px 0 rgba(255,255,255,.8);
         }
 
+        /* Define a aparência e o posicionamento do formulário. */
         form {
             max-width: 720px;
             margin: 0 auto;
@@ -129,6 +144,7 @@
             color: #8a6d55;
         }
 
+        /* Estilização dos campos de preenchimento do formulário. */
         input[type="text"],
         input[type="number"],
         select,
@@ -145,6 +161,8 @@
             transition: border-color .15s, box-shadow .15s;
         }
         textarea { min-height: 220px; resize: vertical; line-height: 1.5; }
+
+        /* Destaca os campos quando o usuário seleciona algum deles. */
         input:focus, select:focus, textarea:focus {
             border-color: var(--mostarda);
             box-shadow: 0 0 0 4px rgba(224,165,38,.25);
@@ -152,6 +170,7 @@
 
         .acoes { position: relative; z-index: 1; margin-top: 10px; }
 
+        /* Estilização do botão de salvar e seus efeitos visuais. */
         button {
             padding: 16px 40px;
             font-family: Georgia, serif;
@@ -182,8 +201,10 @@
 
 <h1>✏️ Editar Receita</h1>
 
+<!-- Formulário que permite alterar as informações de uma receita já cadastrada. -->
 <form action="editar.jsp" method="post">
 
+    <!-- Mantém o ID da receita para identificar qual registro será atualizado. -->
     <input type="hidden" name="id" value="<%= receita.getId() %>">
 
     <div class="campo">
@@ -210,6 +231,8 @@
     <div class="campo">
         <label for="dificuldade">Dificuldade</label>
         <span class="ajuda">Fácil: poucos ingredientes e técnica simples. Média: exige atenção a tempos e pontos. Difícil: técnica avançada ou vários preparos.</span>
+
+        <!-- As opções permitem selecionar a dificuldade atual ou escolher outra. -->
         <select id="dificuldade" name="dificuldade">
             <option value="Fácil"   <%= "Fácil".equals(receita.getDificuldade())   ? "selected" : "" %>>Fácil</option>
             <option value="Média"   <%= "Média".equals(receita.getDificuldade())   ? "selected" : "" %>>Média</option>
@@ -224,7 +247,10 @@
     </div>
 
     <div class="acoes">
+        <!-- Botão que envia os dados modificados para serem salvos. -->
         <button type="submit">Salvar</button>
+
+        <!-- Link que cancela a edição e retorna à listagem. -->
         <a href="listagem.jsp">Cancelar</a>
     </div>
 

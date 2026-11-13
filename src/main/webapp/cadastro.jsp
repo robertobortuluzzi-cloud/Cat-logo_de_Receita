@@ -1,22 +1,27 @@
+
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="br.com.senai.projeto.model.Receita" %>
 <%@ page import="br.com.senai.projeto.dao.ReceitaDAO" %>
 <%@ page import="br.com.senai.projeto.dao.ReceitaDAOimpl" %>
 
 <%
+    // Verifica se o formulário foi enviado.
     if ("POST".equalsIgnoreCase(request.getMethod())) {
         request.setCharacterEncoding("UTF-8");
 
+        // Cria uma receita e recebe os dados preenchidos pelo usuário.
         Receita receita = new Receita();
-        receita.setNome(request.getParameter("nome"));
-        receita.setCategoria(request.getParameter("categoria"));
-        receita.setTempo(Integer.parseInt(request.getParameter("tempoPreparo")));
-        receita.setDificuldade(request.getParameter("dificuldade"));
-        receita.setDescricao(request.getParameter("descricao"));
+        receita.setNome(request.getParameter("Nome"));
+        receita.setCategoria(request.getParameter("Categoria"));
+        receita.setTempo(Integer.parseInt(request.getParameter("TempoDePreparo")));
+        receita.setDificuldade(request.getParameter("Dificuldade"));
+        receita.setDescricao(request.getParameter("Descricao"));
 
+        // Cadastra a receita no banco de dados.
         ReceitaDAO dao = new ReceitaDAOimpl();
         dao.cadastrar(receita);
 
+        // Redireciona para a listagem após o cadastro.
         response.sendRedirect("listagem.jsp");
         return;
     }
@@ -103,6 +108,7 @@
             color: #8a6d55;
         }
 
+        /* Estiliza os campos de preenchimento do formulário. */
         input[type="text"],
         input[type="number"],
         select,
@@ -154,32 +160,33 @@
 </head>
 <body>
 
-<h1>🥕 Nova Receita</h1>
+<h1> Nova Receita</h1>
 
+<!-- Formulário para cadastrar uma nova receita. -->
 <form action="cadastro.jsp" method="post">
 
     <div class="campo">
         <label for="nome">Nome da receita</label>
         <span class="ajuda">Como a receita vai aparecer na lista. Ex.: Bolo de cenoura com cobertura de chocolate.</span>
-        <input type="text" id="nome" name="nome" maxlength="150" required>
+        <input type="text" id="nome" name="Nome" maxlength="150" required>
     </div>
 
     <div class="campo">
         <label for="categoria">Categoria</label>
         <span class="ajuda">O tipo de prato. Ex.: Sobremesa, Massa, Salada, Lanche, Bebida.</span>
-        <input type="text" id="categoria" name="categoria" maxlength="100" required>
+        <input type="text" id="categoria" name="Categoria" maxlength="100" required>
     </div>
 
     <div class="campo">
         <label for="tempoPreparo">Tempo de preparo (minutos)</label>
         <span class="ajuda">Tempo total até ficar pronto, contando forno e cozimento. Use só números. Ex.: 45.</span>
-        <input type="number" id="tempoPreparo" name="tempoPreparo" min="1" required>
+        <input type="number" id="tempoPreparo" name="TempoDePreparo" min="1" required>
     </div>
 
     <div class="campo">
         <label for="dificuldade">Dificuldade</label>
         <span class="ajuda">Fácil: poucos ingredientes e técnica simples. Média: exige atenção a tempos e pontos. Difícil: técnica avançada ou vários preparos.</span>
-        <select id="dificuldade" name="dificuldade">
+        <select id="dificuldade" name="Dificuldade">
             <option value="Fácil">Fácil</option>
             <option value="Média">Média</option>
             <option value="Difícil">Difícil</option>
@@ -189,11 +196,12 @@
     <div class="campo">
         <label for="descricao">Modo de preparo (passo a passo)</label>
         <span class="ajuda">Escreva os ingredientes e os passos, um por linha, na ordem em que devem ser feitos. Máximo de 5000 caracteres.</span>
-        <textarea id="descricao" name="descricao" maxlength="5000" required
-                  placeholder="1. Misture os ovos, o óleo e as cenouras no liquidificador.&#10;2. Acrescente o açúcar e bata bem.&#10;3. Misture a farinha e o fermento.&#10;4. Asse a 180 °C por 40 minutos."></textarea>
+        <textarea id="descricao" name="Descricao" maxlength="5000" required
+                  placeholder="1. Misture os ovos, junto com o óleo e as cenouras no liquidificador.&#10;2. Acrescente o açúcar e bata bem.&#10;3. Misture a farinha e o fermento.&#10;4. Asse a 180 °C por 40 minutos."></textarea>
     </div>
 
     <div class="acoes">
+        <!-- Envia os dados para serem cadastrados. -->
         <button type="submit">Cadastrar</button>
         <a href="listagem.jsp">Cancelar</a>
     </div>
